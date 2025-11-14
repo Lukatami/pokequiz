@@ -6,6 +6,7 @@ export const usePokemonQuizStore = create((set, get) => ({
   choices: [],
   isLoading: false,
   error: null,
+
   getNewQuestion: async () => {
     set({ isLoading: true, error: null });
 
@@ -27,19 +28,22 @@ export const usePokemonQuizStore = create((set, get) => ({
           const pokemon = await response.json();
           pokemons.push(pokemon);
         } catch (e) {
-          console.error(error);
+          console.error(e)
         }
       }
 
       const correctPokemon =
-        pokemons[Math.floor(Math.random) * pokemons.length];
+        pokemons[Math.floor(Math.random() * pokemons.length)];
       const allChoices = pokemons.map((p) => p.name);
       const shuffledChoices = allChoices.sort(() => Math.random() - 0.5);
+
+      const pokemonImage =
+        correctPokemon.sprites?.other?.["official-artwork"]?.front_default;
 
       set({
         currentPokemon: {
           name: correctPokemon.name,
-          image: correctPokemon.sprites.other["official-artwork"].front_default,
+          image: pokemonImage,
         },
         choices: shuffledChoices,
         isLoading: false,
