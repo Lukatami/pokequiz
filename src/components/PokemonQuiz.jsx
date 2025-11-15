@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { usePokemonQuizStore } from "../stores/pokemonQuizStore";
+import WTP from "../image/whos-that-pokemon.jpg";
 
 function PokemonQuiz() {
   const {
@@ -9,6 +10,7 @@ function PokemonQuiz() {
     isLoading,
     error,
     getNewQuestion,
+    checkAnswer,
     resetGame,
   } = usePokemonQuizStore();
 
@@ -19,8 +21,12 @@ function PokemonQuiz() {
   }, []);
 
   function handleAnswerClick(choice) {
+    const isCorrect = checkAnswer(choice);
     setSelectedAnswer(choice);
-    // console.log("Player choice:", choice);
+    setTimeout(() => {
+      setSelectedAnswer(null);
+      getNewQuestion();
+    }, 2000);
   }
 
   //   console.log("Component render - currentPokemon:", currentPokemon);
@@ -35,10 +41,18 @@ function PokemonQuiz() {
     );
   }
 
-  if (isLoading || !currentPokemon || !currentPokemon.image) {
+  if (isLoading || !currentPokemon || !currentPokemon?.image) {
     // console.log("Showing loading state - currentPokemon:", currentPokemon);
-    return <div>Loading...</div>;
+    return (
+      <div>
+        <div>Score: {score}</div>
+        <img src={WTP} alt="whos-that-pokemon"></img>
+        <div>Loading...</div>
+      </div>
+    );
   }
+
+  const safeImage = currentPokemon?.image || "";
 
   return (
     <div>

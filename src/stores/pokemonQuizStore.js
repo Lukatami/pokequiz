@@ -44,7 +44,7 @@ export const usePokemonQuizStore = create((set, get) => ({
 
       //   console.log("Loaded pokemons:", pokemons.length);
 
-      if (pokemons.length < 3) {
+      if (pokemons.length < 2) {
         throw new Error("Not enough Pokemons loaded");
       }
 
@@ -77,6 +77,15 @@ export const usePokemonQuizStore = create((set, get) => ({
       });
     }
   },
+
+  checkAnswer: (selectedAnswer) => {
+    const { currentPokemon, score } = get();
+    const isCorrect = selectedAnswer === currentPokemon.name;
+
+    set({ score: isCorrect ? score + 1 : score - 1 });
+    return isCorrect;
+  },
+
   resetGame: () => {
     // console.log("Resetting game...");
 
@@ -96,6 +105,6 @@ export const usePokemonQuizStore = create((set, get) => ({
       //   console.log("Game reset complete");
 
       get().getNewQuestion();
-    }, 100);
+    }, 1000);
   },
 }));
