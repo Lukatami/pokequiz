@@ -1,0 +1,36 @@
+.choice-button-container {
+  display: flex;
+  gap: 20px;
+}
+
+.choice-button {
+  cursor: pointer;
+  border: 2px black solid;
+  border-radius: 5px;
+  background-color: rgb(1, 87, 236);
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+  color: white;
+  height: 5em;
+  width: 10em;
+  padding: 10px 20px;
+  font-family: "Wendy One", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 16px;
+  transition: all 0.3s ease;
+}
+
+.choice-button:hover {
+  box-shadow: 3px 3px 8px rgba(0, 0, 0, 0.4);
+}
+
+.choice-button.correct {
+  background-color: green;
+}
+.choice-button.incorrect {
+  background-color: red;
+}
+.choice-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}

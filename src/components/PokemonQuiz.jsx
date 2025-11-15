@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { usePokemonQuizStore } from "../stores/pokemonQuizStore";
+import "./PokemonQuiz.css";
 import WTP from "../image/whos-that-pokemon.jpg";
 
 function PokemonQuiz() {
@@ -15,6 +16,14 @@ function PokemonQuiz() {
   } = usePokemonQuizStore();
 
   const [selectedAnswer, setSelectedAnswer] = useState(null);
+
+  function getButtonClass(choice) {
+    if (!selectedAnswer) return "choice-button";
+    if (choice === currentPokemon.name) return "choice-button correct";
+    if (choice === selectedAnswer && choice !== currentPokemon.name)
+      return "choice-button incorrect";
+    return "choice-button";
+  }
 
   useEffect(() => {
     getNewQuestion();
@@ -66,11 +75,18 @@ function PokemonQuiz() {
         }}
       />
       <h3>Who's That Pokémon?</h3>
-      {choices.map((choice, index) => (
-        <button key={index} onClick={() => handleAnswerClick(choice)}>
-          {choice}
-        </button>
-      ))}
+      <div className="choice-button-container">
+        {choices.map((choice, index) => (
+          <button
+            key={index}
+            onClick={() => handleAnswerClick(choice)}
+            className={getButtonClass(choice)}
+            disabled={selectedAnswer !== null}
+          >
+            {choice.toUpperCase()}
+          </button>
+        ))}
+      </div>
       <button onClick={resetGame}>Start New Game</button>
     </div>
   );
