@@ -5,8 +5,13 @@ export const usePokemonQuizStore = create((set, get) => ({
   score: 0,
   currentPokemon: { name: "", image: WTP },
   choices: [],
+  timeLeft: 120,
+  isQuizActive: true,
 
   getNewQuestion: async () => {
+    const { isQuizActive } = get();
+    if (!isQuizActive) return;
+
     try {
       const pokemonIds = [];
       while (pokemonIds.length < 3) {
@@ -59,7 +64,9 @@ export const usePokemonQuizStore = create((set, get) => ({
   },
 
   checkAnswer: (selectedAnswer) => {
-    const { currentPokemon, score } = get();
+    const { currentPokemon, score, isQuizActive } = get();
+    if (!isQuizActive) return false;
+
     const isCorrect = selectedAnswer === currentPokemon.name;
 
     set({ score: isCorrect ? score + 1 : Math.max(0, score - 1) });
@@ -67,7 +74,24 @@ export const usePokemonQuizStore = create((set, get) => ({
   },
 
   resetGame: () => {
-    set({ score: 0 });
+    set({ score: 0, timeLeft: 180, isQuizActive: true });
     get().getNewQuestion();
+  },
+
+  decrementTime: () => {
+    set((state) => {
+      const newTimeLeft = state.timeLeft - 1;
+      if (newTimeLeft <= 0) {
+        return {
+          timeLeft: 0,
+          isQuizActive: false,
+        };
+      }
+      return { timeLeft: newTimeLeft };
+    });
+  },
+
+  setQuizActive: (active) => {
+    set({ isQuizActive: active });
   },
 }));

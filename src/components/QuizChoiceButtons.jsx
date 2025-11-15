@@ -2,7 +2,7 @@ import { useState } from "react";
 import { usePokemonQuizStore } from "../stores/pokemonQuizStore";
 
 function QuizChoiceButtons() {
-  const { currentPokemon, choices, checkAnswer, getNewQuestion, resetGame } =
+  const { currentPokemon, choices, checkAnswer, getNewQuestion, isQuizActive } =
     usePokemonQuizStore();
 
   const [selectedAnswer, setSelectedAnswer] = useState(null);
@@ -16,12 +16,15 @@ function QuizChoiceButtons() {
   }
 
   function handleAnswerClick(choice) {
+    if (!isQuizActive || selectedAnswer) return;
     checkAnswer(choice);
     setSelectedAnswer(choice);
 
     setTimeout(() => {
       setSelectedAnswer(null);
-      getNewQuestion();
+      if (isQuizActive) {
+        getNewQuestion();
+      }
     }, 2000);
   }
 
@@ -32,7 +35,7 @@ function QuizChoiceButtons() {
           key={index}
           onClick={() => handleAnswerClick(choice)}
           className={getButtonClass(choice)}
-          disabled={selectedAnswer !== null}
+          disabled={selectedAnswer !== null || !isQuizActive}
         >
           {choice}
         </button>

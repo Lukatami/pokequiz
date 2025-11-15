@@ -5,10 +5,16 @@ import QuizPokemonImage from "./QuizPokemonImage";
 import QuizChoiceButtons from "./QuizChoiceButtons";
 
 function PokemonQuiz() {
-  const { getNewQuestion } = usePokemonQuizStore();
+  const { getNewQuestion, timeLeft, isGameActive, decrementTime } = usePokemonQuizStore();
 
   useEffect(() => {
     getNewQuestion();
+
+    const timer = setInterval(() => {
+      decrementTime()
+    }, 1000)
+
+    return () => clearInterval(timer)
   }, []);
 
   return (
