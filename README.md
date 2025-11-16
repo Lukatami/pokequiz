@@ -9,7 +9,7 @@ Players have **120 seconds** to guess as many Pokémon as possible. Each round s
 
 ## 🚀 Live demo
 
-*(Add your deployed demo link here — e.g. Vercel / Netlify / GitHub Pages)*
+[*Deployed Demo Netlify*](https://pokequiz-sba.netlify.app/)
 
 ---
 
