@@ -1,4 +1,4 @@
-import './index.css'
+import "./index.css";
 
 import PokemonQuiz from "./components/PokemonQuiz";
 

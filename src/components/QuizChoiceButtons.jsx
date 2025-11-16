@@ -25,7 +25,7 @@ function QuizChoiceButtons() {
       if (isQuizActive) {
         getNewQuestion();
       }
-    }, 2000);
+    }, 1000);
   }
 
   return (

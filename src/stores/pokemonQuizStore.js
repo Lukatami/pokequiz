@@ -2,11 +2,17 @@ import { create } from "zustand";
 import WTP from "../image/whos-that-pokemon.jpg";
 
 export const usePokemonQuizStore = create((set, get) => ({
+  stage: "menu",
   score: 0,
   currentPokemon: { name: "", image: WTP },
   choices: [],
-  timeLeft: 120,
-  isQuizActive: true,
+  timeLeft: 0,
+  isQuizActive: false,
+
+  startQuiz: () => {
+    set({ stage: "quiz", score: 0, timeLeft: 120, isQuizActive: true });
+    get().getNewQuestion();
+  },
 
   getNewQuestion: async () => {
     const { isQuizActive } = get();
@@ -74,7 +80,7 @@ export const usePokemonQuizStore = create((set, get) => ({
   },
 
   resetGame: () => {
-    set({ score: 0, timeLeft: 180, isQuizActive: true });
+    set({ score: 0, timeLeft: 120, isQuizActive: true });
     get().getNewQuestion();
   },
 
@@ -85,6 +91,7 @@ export const usePokemonQuizStore = create((set, get) => ({
         return {
           timeLeft: 0,
           isQuizActive: false,
+          stage: "quizOver",
         };
       }
       return { timeLeft: newTimeLeft };

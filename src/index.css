@@ -15,6 +15,19 @@
   font-family: "Wendy One", sans-serif;
 }
 
+.quiz-menu {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.logo {
+  object-fit: cover;
+  width: 100%;
+}
+
 .quiz-question {
   font-size: 2rem;
   color: #232323;
@@ -69,7 +82,8 @@
 }
 
 .choice-button,
-.new-game-button {
+.new-game-button,
+.start-quiz-button {
   cursor: pointer;
   border: 3px solid #3240d2;
   border-radius: 12px;
@@ -91,7 +105,8 @@
 }
 
 .choice-button:hover,
-.new-game-button:hover {
+.new-game-button:hover,
+.start-quiz-button {
   transform: translateY(-3px);
   box-shadow: 6px 6px 12px rgba(0, 0, 0, 0.3);
   background: rgb(14, 104, 230);

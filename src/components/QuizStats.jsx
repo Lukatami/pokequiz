@@ -1,7 +1,7 @@
 import { usePokemonQuizStore } from "../stores/pokemonQuizStore";
 
 function QuizStats() {
-  const { score, timeLeft, isGameActive, resetGame } = usePokemonQuizStore();
+  const { score, timeLeft, resetGame } = usePokemonQuizStore();
 
   function handleNewGameClick() {
     resetGame();
@@ -10,7 +10,7 @@ function QuizStats() {
   function formatTime(seconds) {
     const mins = Math.floor(seconds / 60);
     const secs = seconds % 60;
-    return `${mins.toString()}:${secs.toString()}`;
+    return `${mins.toString()} : ${secs.toString()}`;
   }
 
   return (
